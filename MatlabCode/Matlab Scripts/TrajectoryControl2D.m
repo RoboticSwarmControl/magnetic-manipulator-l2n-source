@@ -119,6 +119,11 @@ Yplot=linspace(ymin,ymax,NbPtsY); %Initialize y vector
 XplotQuiver=linspace(xmin,xmax,NbPtsX./50); %Initialize x vector
 YplotQuiver=linspace(ymin,ymax,NbPtsY./50); %Initialize y vector
 for i=1:NbPtsX
+    if ~mod(i,10)
+        clc
+        disp('Computing flux density map. ')
+        disp(['Progress:',num2str(100.*i/NbPtsX),' %'])
+    end
     for j=1:NbPtsY
         MatPlotB(j,i,:,:)=[GFunction( 1,[Xplot(i),Yplot(j)],coil_radius,T );GFunction( 2,[Xplot(i),Yplot(j)],coil_radius,T );GFunction( 3,[Xplot(i),Yplot(j)],coil_radius,T );GFunction( 4,[Xplot(i),Yplot(j)],coil_radius ,T)]  ;       %#ok<*SAGROW>     
     end
@@ -223,7 +228,9 @@ hold on
 
 
 for i2=1:NbPtsX
-    for j2=1:NbPtsY        
+
+    
+    for j2=1:NbPtsY
         temp=MatPlotB(j2,i2,1,1);%MatPlotB(j,i2,:,:)*i2;
         Bx(j2,i2)=MatPlotB(j2,i2,1,1).*NbTurns.*I(1)+MatPlotB(j2,i2,2,1).*NbTurns.*I(2)+MatPlotB(j2,i2,3,1).*NbTurns.*I(3)+MatPlotB(j2,i2,4,1).*NbTurns.*I(4);
         By(j2,i2)=MatPlotB(j2,i2,1,2).*NbTurns.*I(1)+MatPlotB(j2,i2,2,2).*NbTurns.*I(2)+MatPlotB(j2,i2,3,2).*NbTurns.*I(3)+MatPlotB(j2,i2,4,2).*NbTurns.*I(4);
@@ -340,11 +347,7 @@ end
 %%END OF Optional figure
 %%/////////////////////////////////////////////////////////////////////
 % 
-bar([1 10 7 8 2 2 9 3 6])
-fig = gcf;
-fig.InvertHardcopy = 'off';
-filename=[char(string(image_index)),'.png']
-saveas(gcf,filename)
+
 
 drawnow
 image_index=image_index+1;
