@@ -59,9 +59,9 @@ Current3=Solution(3)/NbTurns;%[A]
 Current4=Solution(4)/NbTurns; %[A]
 end
 
-if Saturating
-    disp(['Current Saturates'])
-end
+% if Saturating
+%     disp(['Current Saturates'])
+% end
 I=[Current1;Current2;Current3;Current4];
 end
 
